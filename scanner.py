@@ -1,21 +1,18 @@
 import RPi.GPIO as GPIO
 import time
-
+GPIO_NO = 27
 # Set the GPIO mode to BCM
 GPIO.setmode(GPIO.BCM)
 
 # Set up GPIO pin 17 as an input
-GPIO.setup(27, GPIO.IN)
+GPIO.setup(GPIO_NO, GPIO.IN)
 
 try:
     while True:
         # Read the state of GPIO pin 17
-        input_state = GPIO.input(17)
+        input_state = GPIO.input(GPIO_NO)
         
-        if input_state == GPIO.HIGH:
-            print("GPIO 17 is HIGH")
-        else:
-            print("GPIO 17 is LOW")
+        print(f"Value: {input_state}"
         
         # Delay for a short period to avoid busy-waiting
         time.sleep(0.1)
