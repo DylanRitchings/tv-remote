@@ -17,7 +17,7 @@ int main() {
         //if (digitalRead(IR_GPIO_PIN) == HIGH) {
         int value = digitalRead(IR_GPIO_PIN);
         printf("IR Value: %d\n", value);
-        delay(1); 
+        delay(50); 
         //}
     }
 
