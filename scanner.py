@@ -40,7 +40,7 @@ def ir_output():
     except KeyboardInterrupt:
         pass
             
-ir_input()
+ir_output()
 
     # Clean up and release the GPIO pin
 GPIO.cleanup()
