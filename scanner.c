@@ -2,7 +2,7 @@
 #include <wiringPi.h>
 
 // Define the GPIO pin where the IR receiver is connected
-#define IR_GPIO_PIN 13 // Replace with the actual GPIO pin number
+#define IR_GPIO_PIN 11 // Replace with the actual GPIO pin number
 
 int main() {
     if (wiringPiSetup() == -1) {
