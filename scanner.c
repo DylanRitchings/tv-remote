@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <wiringPi.h>
 
-#define IR_GPIO_PIN 27 
+#define IR_GPIO_PIN 2
 
 int main() {
     if (wiringPiSetup() == -1) {
