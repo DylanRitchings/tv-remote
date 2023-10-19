@@ -5,7 +5,7 @@ import time
 GPIO.setmode(GPIO.BCM)
 
 # Set up GPIO pin 17 as an input
-GPIO.setup(17, GPIO.IN)
+GPIO.setup(27, GPIO.IN)
 
 try:
     while True:
