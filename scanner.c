@@ -2,7 +2,7 @@
 #include <wiringPi.h>
 
 // Define the GPIO pin where the IR receiver is connected
-#define IR_GPIO_PIN 17 // Replace with the actual GPIO pin number
+#define IR_GPIO_PIN 13 // Replace with the actual GPIO pin number
 
 int main() {
     if (wiringPiSetup() == -1) {
@@ -11,7 +11,7 @@ int main() {
     }
 
     // Set the GPIO pin to input mode
-    pinMode(13, INPUT);
+    pinMode(IR_GPIO_PIN, INPUT);
 
     printf("IR receiver initialized. Listening for IR messages...\n");
 
