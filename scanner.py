@@ -1,37 +1,29 @@
-import RPi.GPIO as GPIO
+from gpiozero import DigitalInputDevice
 import time
 
-# Set the GPIO mode to BCM
-GPIO.setmode(GPIO.BCM)
-
 # Define the GPIO pin connected to the IR receiver
-ir_pin = 13
+ir_pin = 18  # Replace with the appropriate GPIO pin
 
-# Set the GPIO pin as an input
-GPIO.setup(ir_pin, GPIO.IN)
+# Create a DigitalInputDevice for the IR receiver
+ir_receiver = DigitalInputDevice(ir_pin, pull_up=False)
 
 try:
     while True:
         # Wait for a falling edge (IR signal received)
-        GPIO.wait_for_edge(ir_pin, GPIO.FALLING)
-        
-        # Record the start time
+        ir_receiver.wait_for_active()
         start_time = time.time()
-        
+
         # Wait for a rising edge (IR signal ended)
-        GPIO.wait_for_edge(ir_pin, GPIO.RISING)
-        
-        # Record the end time
+        ir_receiver.wait_for_inactive()
         end_time = time.time()
-        
+
         # Calculate the duration of the IR signal
         signal_duration = end_time - start_time
-        
-        # You can add your own logic to handle the IR signal duration
         print(f"IR Signal Duration: {signal_duration} seconds")
-        
+
 except KeyboardInterrupt:
     pass
 
-# Clean up GPIO
-GPIO.cleanup()
+# Cleanup (not always required, depending on your platform)
+ir_receiver.close()
+
