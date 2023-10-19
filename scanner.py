@@ -5,7 +5,7 @@ import time
 GPIO.setmode(GPIO.BCM)
 
 # Define the GPIO pin connected to the IR receiver
-ir_pin = 18
+ir_pin = 13
 
 # Set the GPIO pin as an input
 GPIO.setup(ir_pin, GPIO.IN)
