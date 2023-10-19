@@ -1,25 +1,30 @@
 #include <stdio.h>
-#include <ir_scanner_library.h>
+#include <wiringPi.h>
+
+// Define the GPIO pin where the IR receiver is connected
+#define IR_GPIO_PIN 17 // Replace with the actual GPIO pin number
 
 int main() {
-    // Initialize the IR scanner
-    if (ir_scanner_init() != 0) {
-        fprintf(stderr, "Failed to initialize the IR scanner.\n");
+    if (wiringPiSetup() == -1) {
+        fprintf(stderr, "Failed to initialize WiringPi.\n");
         return 1;
     }
 
-    // Attempt to perform a scan
-    int scan_result = ir_scanner_scan();
-    
-    if (scan_result != 0) {
-        fprintf(stderr, "Failed to scan data. Error code: %d\n", scan_result);
-    } else {
-        printf("Scan successful. Now you can process the data.\n");
-        // Process the scanned data here
+    // Set the GPIO pin to input mode
+    pinMode(IR_GPIO_PIN, INPUT);
+
+    printf("IR receiver initialized. Listening for IR messages...\n");
+
+    while (1) {
+        if (digitalRead(IR_GPIO_PIN) == HIGH) {
+            // IR signal detected, process it here
+            printf("IR signal received!\n");
+            // Add your IR signal processing code here
+        }
+        delay(100); // Adjust delay as needed to control how often you check for signals
     }
 
-    // Clean up and release resources
-    ir_scanner_cleanup();
+    // The cleanup code will not be reached in this example, as the loop is infinite
 
     return 0;
 }
