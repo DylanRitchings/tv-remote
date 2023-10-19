@@ -16,12 +16,12 @@ int main() {
     printf("IR receiver initialized. Listening for IR messages...\n");
 
     while (1) {
-        if (digitalRead(IR_GPIO_PIN) == HIGH) {
+        //if (digitalRead(IR_GPIO_PIN) == HIGH) {
             // IR signal detected
-            int value = digitalRead(IR_GPIO_PIN);
-            printf("Raw IR Value: %d\n", value);
-            delay(100); // Adjust the delay as needed
-        }
+        int value = digitalRead(IR_GPIO_PIN);
+        printf("Raw IR Value: %d\n", value);
+        delay(100); // Adjust the delay as needed
+        //}
     }
 
     // The cleanup code will not be reached in this example, as the loop is infinite
