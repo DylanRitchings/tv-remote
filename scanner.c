@@ -26,8 +26,7 @@ int main() {
     }
 
     // Get a pointer to the GPIO control registers
-    gpio = (volatile unsigned int *)(uintptr_t)gpio_map;
-
+    gpio = (volatile unsigned int *)((unsigned int)gpio_map);
     // Read the value of GPIO 7
     if (gpio[0] & (1 << 7))
         printf("Pin 7 is high\n");
