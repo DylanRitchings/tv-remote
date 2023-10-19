@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <sys/mman.h>
+#include <unistd.h>
 
 #define GPIO_BASE 0x3F000000  // The base address for GPIO memory mapping on a Raspberry Pi
 
@@ -25,7 +26,7 @@ int main() {
     }
 
     // Get a pointer to the GPIO control registers
-    gpio = (volatile unsigned int *)gpio_map;
+    gpio = (volatile unsigned int *)(uintptr_t)gpio_map;
 
     // Read the value of GPIO 7
     if (gpio[0] & (1 << 7))
