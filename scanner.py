@@ -36,6 +36,8 @@ def ir_output():
             GPIO.output(IR_OUTPUT_PIN, 1)
             time.sleep(pulse_length)
             GPIO.output(IR_OUTPUT_PIN, 0)
+    except KeyboardInterrupt:
+        pass
             
 ir_output()
 
