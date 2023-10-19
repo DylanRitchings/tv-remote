@@ -33,10 +33,10 @@ ir_output_list = [0.009032011032104492, 0.0005812644958496094, 0.000579595565795
 def ir_output():
     try:
         for pulse_length in ir_output_list:
-            GPIO.output(IR_OUTPUT_PIN, 1)
+            GPIO.output(IR_OUTPUT_PIN, 0)
             time.sleep(pulse_length)
             print(pulse_length)
-            GPIO.output(IR_OUTPUT_PIN, 0)
+            GPIO.output(IR_OUTPUT_PIN, 1)
     except KeyboardInterrupt:
         pass
             
