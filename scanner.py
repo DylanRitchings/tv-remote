@@ -1,24 +1,28 @@
 import RPi.GPIO as GPIO
 import time
-GPIO_NO = 27
+
 # Set the GPIO mode to BCM
 GPIO.setmode(GPIO.BCM)
 
-# Set up GPIO pin 17 as an input
-GPIO.setup(GPIO_NO, GPIO.IN)
+# Set up the GPIO pin connected to the IR receiver as an input
+IR_PIN = 27  # Replace with the GPIO pin number you're using
+GPIO.setup(IR_PIN, GPIO.IN)
 
 try:
     while True:
-        # Read the state of GPIO pin 17
-        input_state = GPIO.input(GPIO_NO)
-        
-        print(f"Value: {input_state}")
-        
-        # Delay for a short period to avoid busy-waiting
-        time.sleep(0.1)
+        while GPIO.input(IR_PIN) == GPIO.HIGH:
+            pass  # Wait for the start of the IR signal
+        start_time = time.time()
+
+        while GPIO.input(IR_PIN) == GPIO.LOW:
+            pass  # Wait for the end of the start pulse
+        end_time = time.time()
+
+        pulse_duration = end_time - start_time
+        print(f"IR Pulse Duration: {pulse_duration:.6f} seconds")
 
 except KeyboardInterrupt:
     pass
 
-# Clean up and release the GPIO pins
+# Clean up and release the GPIO pin
 GPIO.cleanup()
