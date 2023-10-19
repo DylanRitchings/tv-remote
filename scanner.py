@@ -12,7 +12,7 @@ try:
         # Read the state of GPIO pin 17
         input_state = GPIO.input(GPIO_NO)
         
-        print(f"Value: {input_state}"
+        print(f"Value: {input_state}")
         
         # Delay for a short period to avoid busy-waiting
         time.sleep(0.1)
