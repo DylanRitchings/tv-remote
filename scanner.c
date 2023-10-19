@@ -11,7 +11,7 @@ int main() {
     }
 
     // Set the GPIO pin to input mode
-    pinMode(IR_GPIO_PIN, INPUT);
+    pinMode(13, INPUT);
 
     printf("IR receiver initialized. Listening for IR messages...\n");
 
