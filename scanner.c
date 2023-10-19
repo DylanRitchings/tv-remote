@@ -4,70 +4,43 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#define GPIO_BASE 0x3F000000  // The base address for GPIO memory mapping on a Raspberry Pi
+#define GPIO_BASE 0xFE200000  // Use the appropriate base address for your Raspberry Pi model
+
+// Define offsets for GPIO registers
+#define GPFSEL0  (0x00 / 4)
+#define GPLEV0   (0x34 / 4)
 
 int main() {
-    int fd;  // File descriptor for /dev/mem
-    void *gpio_map;  // Pointer to the mapped memory
-    unsigned int *gpio;  // Pointer to the GPIO control registers
+    int fd;
+    void *gpio_map;
+    volatile unsigned int *gpio;
 
-    // Open /dev/mem to access physical memory
     fd = open("/dev/mem", O_RDWR | O_SYNC);
     if (fd < 0) {
         perror("Unable to open /dev/mem");
         return -1;
     }
 
-    // Map the GPIO registers into the process's address space
     gpio_map = mmap(NULL, 4096, PROT_READ | PROT_WRITE, MAP_SHARED, fd, GPIO_BASE);
     if (gpio_map == MAP_FAILED) {
         perror("mmap failed");
+        close(fd);  // Close the file descriptor
         return -1;
     }
 
-    // Get a pointer to the GPIO control registers
-    gpio = (volatile unsigned int *)((unsigned int)gpio_map);
-    // Read the value of GPIO 7
-    if (gpio[0] & (1 << 7))
-        printf("Pin 7 is high\n");
-    else
-        printf("Pin 7 is low\n");
+    gpio = (volatile unsigned int *)gpio_map;
 
-    // Unmap the memory and close /dev/mem
+    // Read the value of GPIO 17
+    int pin_value = (gpio[GPLEV0] >> 17) & 1;
+    
+    if (pin_value)
+        printf("GPIO 17 is high\n");
+    else
+        printf("GPIO 17 is low\n");
+
+    // Unmap the memory and close the file descriptor
     munmap(gpio_map, 4096);
     close(fd);
 
     return 0;
 }
-
-
-// if (gpio_lev & (1<<7))
-//   printf("1")
-// else
-//   printf("2)
-
-
-// #include <wiringPi.h>
-
-// #define IR_GPIO_PIN 2
-
-// int main() {
-//     if (wiringPiSetup() == -1) {
-//         fprintf(stderr, "Failed to initialize WiringPi.\n");
-//         return 1;
-//     }
-
-//     pinMode(IR_GPIO_PIN, INPUT);
-
-//     printf("IR receiver initialized. Listening for IR messages...\n");
-
-//     while (1) {
-//         //if (digitalRead(IR_GPIO_PIN) == HIGH) {
-//         int value = digitalRead(IR_GPIO_PIN);
-//         printf("IR Value: %d\n", value);
-//         delay(50); 
-//         //}
-//     }
-
-//     return 0;
-// }
